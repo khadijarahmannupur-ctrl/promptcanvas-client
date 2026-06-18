@@ -112,7 +112,8 @@ export default function Navbar() {
               </Avatar>
 
               <Button
-                color="danger"
+                className='bg-[#546B41] text-white'
+                // color="danger"
                 variant="ghost"
                 onClick={handleSignOut}
               >
