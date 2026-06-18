@@ -78,7 +78,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
 
               <Link
-                href="/login"
+                href="/auth/signin"
                 className="text-sm font-semibold text-[#546B41]"
               >
                 Login
