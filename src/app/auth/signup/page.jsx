@@ -18,6 +18,7 @@ import {
     Eye,
     EyeSlash,
 } from "@gravity-ui/icons";
+import { Description, Radio, RadioGroup } from "@heroui/react";
 
 import { signUp } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
@@ -27,6 +28,7 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [photoURL, setPhotoURL] = useState("");
     const [password, setPassword] = useState("");
+    const [role, setRole] = useState("user");
 
     const [isVisible, setIsVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +51,7 @@ export default function SignupPage() {
                 password,
                 name,
                 image: photoURL, // 👈 added image url support
+                role,
                 callbackURL: "/",
             });
 
@@ -184,6 +187,58 @@ export default function SignupPage() {
                             </button>
                         </InputGroup>
                     </TextField>
+
+                    {/* Role Selection */}
+                    <div className="flex flex-col gap-2">
+                        <Label className="text-sm font-medium text-[#2F3B26]">
+                            Select Your Role
+                        </Label>
+
+                        <RadioGroup
+                            // value={role}
+                            // onValueChange={setRole}
+                            onChange={value => setRole(value)}
+                            defaultValue='user'
+                            orientation="horizontal"
+                            className="flex gap-4"
+                        >
+                            {/* User */}
+                            <Radio
+                                value="user"
+                                className="flex-1 rounded-xl border border-[#DCCCAC] bg-[#FFF8EC] px-4 py-3 transition-all duration-200 hover:border-[#546B41] hover:bg-[#F8F2E6]"
+                            >
+                                <Radio.Control>
+                                    <Radio.Indicator className="bg-[#546B41] rounded-full" />
+                                </Radio.Control>
+
+                                <Radio.Content>
+                                    <Label className="cursor-pointer text-sm font-medium text-[#2F3B26]">
+                                        👤 User
+                                    </Label>
+                                </Radio.Content>
+                            </Radio>
+
+                            {/* Creator */}
+                            <Radio
+                                value="creator"
+                                className="flex-1 rounded-xl border border-[#DCCCAC] bg-[#FFF8EC] px-4 py-3 transition-all duration-200 hover:border-[#546B41] hover:bg-[#F8F2E6]"
+                            >
+                                <Radio.Control>
+                                    <Radio.Indicator  className="bg-[#546B41] rounded-full" />
+                                </Radio.Control>
+
+                                <Radio.Content>
+                                    <Label className="cursor-pointer text-sm font-medium text-[#2F3B26]">
+                                        ✨ Creator
+                                    </Label>
+                                </Radio.Content>
+                            </Radio>
+                        </RadioGroup>
+
+                        <p className="text-xs text-gray-500">
+                            You can publish prompts only if you choose the <span className="font-medium text-[#546B41]">Creator</span> role.
+                        </p>
+                    </div>
 
                     {/* Error */}
                     {error && (
