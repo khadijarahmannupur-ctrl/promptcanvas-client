@@ -11,21 +11,21 @@ import {
     Input,
 } from "@heroui/react";
 
-import { Icon } from "@gravity-ui/uikit";
 import {
     Person,
     At,
     ShieldKeyhole,
     Eye,
     EyeSlash,
-    LogoGoogle,
 } from "@gravity-ui/icons";
 
 import { signUp } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [photoURL, setPhotoURL] = useState("");
     const [password, setPassword] = useState("");
 
     const [isVisible, setIsVisible] = useState(false);
@@ -48,6 +48,7 @@ export default function SignupPage() {
                 email,
                 password,
                 name,
+                photoURL, // 👈 added image url support
                 callbackURL: "/",
             });
 
@@ -57,6 +58,7 @@ export default function SignupPage() {
                 setSuccess("Account created successfully 🎉");
                 setName("");
                 setEmail("");
+                setPhotoURL("");
                 setPassword("");
             }
         } catch (err) {
@@ -66,29 +68,27 @@ export default function SignupPage() {
         }
     };
 
-    // Google Signup (placeholder)
     const handleGoogleSignup = async () => {
         setError("");
         setSuccess("Redirecting to Google...");
-        // এখানে তোমার auth provider connect হবে
-        // e.g. signIn.social({ provider: "google" })
+        // signIn.social({ provider: "google" }) -> your auth system
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-[#FFF8EC] px-4">
+        <div className="relative flex min-h-screen items-center justify-center bg-[#FFF8EC] px-4 py-10">
 
-            {/* Background blur */}
-            <div className="absolute left-10 top-10 h-72 w-72 rounded-full bg-[#DCCCAC]/40 blur-3xl" />
-            <div className="absolute right-10 bottom-10 h-72 w-72 rounded-full bg-[#99AD7A]/20 blur-3xl" />
+            {/* Background */}
+            <div className="absolute -left-20 top-10 h-72 w-72 rounded-full bg-[#DCCCAC]/40 blur-3xl" />
+            <div className="absolute right-0 bottom-10 h-72 w-72 rounded-full bg-[#99AD7A]/20 blur-3xl" />
 
-            <Card className="relative z-10 w-full max-w-md border border-[#DCCCAC] bg-white p-6 shadow-xl rounded-2xl">
+            <Card className="relative z-10 w-full max-w-xl rounded-2xl border border-[#DCCCAC] bg-white p-6 shadow-xl">
 
                 {/* Header */}
                 <div className="text-center border-b border-[#DCCCAC] pb-5 mb-6">
                     <h1 className="text-2xl font-bold text-[#2F3B26]">
                         Create Account
                     </h1>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500">
                         Join PromptCanvas community
                     </p>
                 </div>
@@ -99,7 +99,8 @@ export default function SignupPage() {
                     variant="bordered"
                     className="w-full mb-4 border-[#DCCCAC] text-[#2F3B26] hover:bg-[#DCCCAC]/40"
                 >
-                    <Icon data={LogoGoogle} className="mr-2" />
+                    {/* <LogoGoogle className="mr-2 h-4 w-4" /> */}
+                    <FcGoogle />
                     Continue with Google
                 </Button>
 
@@ -117,7 +118,7 @@ export default function SignupPage() {
                     <TextField>
                         <Label className="text-sm text-[#2F3B26]">Name</Label>
                         <InputGroup className="flex items-center gap-2 border border-[#DCCCAC] rounded-xl px-3 bg-[#FFF8EC]">
-                            <Icon data={Person} className="text-[#546B41]" />
+                            <Person className="h-4 w-4 text-[#546B41]" />
                             <Input
                                 placeholder="Your name"
                                 value={name}
@@ -131,7 +132,7 @@ export default function SignupPage() {
                     <TextField>
                         <Label className="text-sm text-[#2F3B26]">Email</Label>
                         <InputGroup className="flex items-center gap-2 border border-[#DCCCAC] rounded-xl px-3 bg-[#FFF8EC]">
-                            <Icon data={At} className="text-[#546B41]" />
+                            <At className="h-4 w-4 text-[#546B41]" />
                             <Input
                                 placeholder="you@example.com"
                                 value={email}
@@ -141,12 +142,26 @@ export default function SignupPage() {
                         </InputGroup>
                     </TextField>
 
+                    {/* Photo URL */}
+                    <TextField>
+                        <Label className="text-sm text-[#2F3B26]">Photo URL</Label>
+                        <InputGroup className="flex items-center gap-2 border border-[#DCCCAC] rounded-xl px-3 bg-[#FFF8EC]">
+                            <input
+                                type="text"
+                                placeholder="https://your-image-link.com"
+                                value={photoURL}
+                                onChange={(e) => setPhotoURL(e.target.value)}
+                                className="w-full bg-transparent py-2 outline-none text-sm"
+                            />
+                        </InputGroup>
+                    </TextField>
+
                     {/* Password */}
                     <TextField>
                         <Label className="text-sm text-[#2F3B26]">Password</Label>
                         <InputGroup className="flex items-center gap-2 border border-[#DCCCAC] rounded-xl px-3 bg-[#FFF8EC]">
 
-                            <Icon data={ShieldKeyhole} className="text-[#546B41]" />
+                            <ShieldKeyhole className="h-4 w-4 text-[#546B41]" />
 
                             <Input
                                 type={isVisible ? "text" : "password"}
@@ -161,7 +176,11 @@ export default function SignupPage() {
                                 onClick={toggleVisibility}
                                 className="text-gray-500 hover:text-[#546B41]"
                             >
-                                <Icon data={isVisible ? EyeSlash : Eye} />
+                                {isVisible ? (
+                                    <EyeSlash className="h-4 w-4" />
+                                ) : (
+                                    <Eye className="h-4 w-4" />
+                                )}
                             </button>
                         </InputGroup>
                     </TextField>
@@ -185,7 +204,7 @@ export default function SignupPage() {
                         Sign Up
                     </Button>
 
-                    {/* Login link */}
+                    {/* Login */}
                     <p className="text-center text-sm text-gray-500">
                         Already have an account?{" "}
                         <Link href="/auth/signin" className="text-[#546B41] font-medium">

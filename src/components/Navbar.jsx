@@ -84,14 +84,13 @@ export default function Navbar() {
                 Login
               </Link>
 
-              <Button
-                as={Link}
-                href="/register"
+              <Link
+                href="/auth/signup"
                 radius="full"
-                className="bg-[#546B41] px-6 text-white hover:bg-[#445636]"
+                className="bg-[#546B41] rounded-full py-3 px-6 text-white hover:bg-[#445636]"
               >
                 Sign Up
-              </Button>
+              </Link>
 
             </div>
           ) : (
