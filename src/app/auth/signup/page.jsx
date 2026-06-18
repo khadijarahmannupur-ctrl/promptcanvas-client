@@ -48,7 +48,7 @@ export default function SignupPage() {
                 email,
                 password,
                 name,
-                photoURL, // 👈 added image url support
+                image: photoURL, // 👈 added image url support
                 callbackURL: "/",
             });
 

@@ -151,7 +151,7 @@ export default function SignInPage() {
                         </InputGroup>
                     </TextField>
 
-                    {/* Forgot Password */}
+                    {/* Forgot Password
                     <div className="text-right">
                         <Link
                             href="/forgot-password"
@@ -159,7 +159,7 @@ export default function SignInPage() {
                         >
                             Forgot Password?
                         </Link>
-                    </div>
+                    </div> */}
 
                     {/* Error */}
                     {error && (

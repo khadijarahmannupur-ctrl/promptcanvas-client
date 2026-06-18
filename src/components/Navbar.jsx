@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 import { Button, Avatar } from "@heroui/react";
 // import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from "@heroicons/react/24/outline";
@@ -11,14 +11,20 @@ import {
   Moon,
 } from "@gravity-ui/icons";
 // import { useTheme } from "next-themes";
-// import { useSession, signOut } from "@/lib/auth-client";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session, isPending } = useSession();
 
-  // Demo
-  const user = null;
-  // const { theme, setTheme } = useTheme();
+  // console.log("Session data in Navbar:", session, "Is pending:", isPending);
+  const user = session?.user;
+  console.log(user)
+
+  const handleSignOut = async () => {
+    await signOut();
+
+  }
 
   const navLinks = [
     { label: "Home", href: "/" },
@@ -96,15 +102,19 @@ export default function Navbar() {
           ) : (
             <div className="flex items-center gap-4">
 
-              <Avatar
-                src={user.photoURL}
+              {/* <Avatar
+                src={user?.image}
                 className="cursor-pointer"
-              />
+              />  */}
+              <Avatar>
+                <Avatar.Image src={user?.image} />
+                <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+              </Avatar>
 
               <Button
                 color="danger"
-                variant="flat"
-                // onPress={() => signOut()}
+                variant="ghost"
+                onClick={handleSignOut}
               >
                 Logout
               </Button>
@@ -176,8 +186,9 @@ export default function Navbar() {
               ) : (
                 <Button
                   color="danger"
-                  variant="flat"
+                  variant="ghost"
                   className="w-full"
+                  onClick={handleSignOut}
                 >
                   Logout
                 </Button>
