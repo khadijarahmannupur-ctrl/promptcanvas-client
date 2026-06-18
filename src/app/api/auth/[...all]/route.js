@@ -1,11 +1,4 @@
-import React from 'react';
+import { auth } from "@/lib/auth"; // path to your auth file
+import { toNextJsHandler } from "better-auth/next-js";
 
-const route = () => {
-    return (
-        <div>
-            rpute . js
-        </div>
-    );
-};
-
-export default route;
+export const { POST, GET } = toNextJsHandler(auth);
