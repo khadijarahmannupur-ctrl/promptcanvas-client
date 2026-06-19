@@ -18,7 +18,7 @@ export async function DashboardSidebar() {
             { icon: House, label: "Home", href: "/dashboard/creator" },
             { icon: Person, label: "Profile", href: "/dashboard/creator/profile" },
             { icon: House, label: "Add Prompt", href: "/dashboard/creator/addPrompt" },
-            { icon: House, label: "My Prompt", href: "/dashboard/creator/myPrompt", },
+            { icon: House, label: "My Prompts", href: "/dashboard/creator/myPrompts", },
         ],
 
         user: [
