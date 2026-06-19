@@ -19,7 +19,7 @@ export default function Navbar() {
 
   // console.log("Session data in Navbar:", session, "Is pending:", isPending);
   const user = session?.user;
-  console.log(user)
+  // console.log(user)
 
   const handleSignOut = async () => {
     await signOut();
