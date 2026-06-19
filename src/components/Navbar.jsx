@@ -29,7 +29,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "All Prompts", href: "/prompts" },
-    ...(user ? [{ label: "Dashboard", href: "/dashboard" }] : []),
+    ...(user? [{ label: "Dashboard", href: `/dashboard/${user?.role}` }] : []),
   ];
 
   return (
@@ -101,11 +101,6 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-
-              {/* <Avatar
-                src={user?.image}
-                className="cursor-pointer"
-              />  */}
               <Avatar>
                 <Avatar.Image src={user?.image} />
                 <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>

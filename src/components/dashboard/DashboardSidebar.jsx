@@ -1,19 +1,44 @@
 
 
+import { auth } from "@/lib/auth";
 import { LayoutSideContentLeft, Bell, Briefcase, Envelope, Gear, House, Magnifier, Person } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
+import { headers } from "next/headers";
 import Link from "next/link";
 
-export function DashboardSidebar() {
-    const navItems = [
-        { icon: House, href: "/dashboard/creator", label: "Home" },
-        { icon: Magnifier, href: "/dashboard/recruiter/jobs", label: "Jobs" },
-        { icon: Bell, href: "/dashboard/recruiter/jobs/new", label: "Post A Job" },
-        { icon: Briefcase, href: "/dashboard/recruiter/company", label: "Company Profile" },
-        { icon: Envelope, href: "/messages", label: "Messages" },
-        { icon: Person, href: "/profile", label: "Profile" },
-        { icon: Gear, href: "/settings", label: "Settings" },
-    ];
+export async function DashboardSidebar() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+    const user = session?.user;
+    const role = user?.role || "user";
+
+    const dashboardItems = {
+        creator: [
+            { icon: House, label: "Home", href: "/dashboard/creator" },
+            { icon: Person, label: "Profile", href: "/dashboard/creator/profile" },
+            { icon: House, label: "Add Prompt", href: "/dashboard/creator/addPrompt" },
+            { icon: House, label: "My Prompt", href: "/dashboard/creator/myPrompt", },
+        ],
+
+        user: [
+            { icon: Person, label: "Profile", href: "/dashboard/user" },
+            { icon: House, label: "Add Prompt", href: "/dashboard/user/addPrompt" },
+            { icon: House, label: "My Prompts", href: "/dashboard/user/myPrompts", },
+            { icon: House, label: "Saved Prompts", href: "/dashboard/user/savedPrompt", },
+            { icon: House, label: "My Reviews", href: "/dashboard/user/myReviews", },
+        ],
+
+        admin: [
+            { icon: House, label: "Profile", href: "/dashboard/admin" },
+            { icon: House, label: "All Users", href: "/dashboard/admin/allUsers" },
+            { icon: House, label: "All Prompts", href: "/dashboard/admin/allPrompts", },
+            { icon: House, label: "All Payments", href: "/dashboard/admin/allPayments", },
+            { icon: House, label: "All Analytics", href: "/dashboard/admin/analytics", },
+        ],
+    };
+
+    const navItems = dashboardItems[role];
 
     const navContent = <nav className="flex flex-col gap-1">
         {navItems.map((item) => (
