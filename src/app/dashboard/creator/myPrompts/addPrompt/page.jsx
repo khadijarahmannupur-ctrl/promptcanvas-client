@@ -21,11 +21,14 @@ import {
     Sparkles,
     CirclePlus,
 } from "@gravity-ui/icons";
+import { createPrompt } from "@/lib/actions/prompts";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 export default function AddPromptPage() {
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
@@ -52,12 +55,14 @@ export default function AddPromptPage() {
             status: "pending",
         };
 
-        console.log(promptData);
+        // console.log(promptData);
 
-        // TODO:
-        // axios.post(...)
-        // toast.success(...)
-        // redirect(...)
+        const res = await createPrompt(promptData);
+        if(res.insertedId){
+            toast.success('Prompt Post Successfully');
+            e.target.reset();
+            redirect('/dashboard/creator')
+        }
     };
 
     const inputClass =
