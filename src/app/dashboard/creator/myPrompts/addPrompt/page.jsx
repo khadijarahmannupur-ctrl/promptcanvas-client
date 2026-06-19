@@ -24,11 +24,15 @@ import {
 import { createPrompt } from "@/lib/actions/prompts";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 export default function AddPromptPage() {
     const [errors, setErrors] = useState({});
 
-    const handleSubmit = async(e) => {
+    const { data: session } = useSession();
+    const user = session?.user;
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
@@ -51,6 +55,11 @@ export default function AddPromptPage() {
 
         const promptData = {
             ...data,
+            creatorId: user?.id,
+            creatorName: user?.name,
+            creatorEmail: user?.email,
+            creatorImage: user?.image,
+            creatorRole: user.role,
             copyCount: 0,
             status: "pending",
         };
@@ -58,10 +67,10 @@ export default function AddPromptPage() {
         // console.log(promptData);
 
         const res = await createPrompt(promptData);
-        if(res.insertedId){
+        if (res.insertedId) {
             toast.success('Prompt Post Successfully');
             e.target.reset();
-            redirect('/dashboard/creator')
+            redirect('/dashboard/creator/myPrompts')
         }
     };
 
