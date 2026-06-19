@@ -20,6 +20,7 @@ import {
     PencilToSquare,
     Sparkles,
     CirclePlus,
+    ArrowUpToLine,
 } from "@gravity-ui/icons";
 import { createPrompt } from "@/lib/actions/prompts";
 import toast from "react-hot-toast";
@@ -28,9 +29,69 @@ import { useSession } from "@/lib/auth-client";
 
 export default function AddPromptPage() {
     const [errors, setErrors] = useState({});
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
 
     const { data: session } = useSession();
     const user = session?.user;
+
+    // image upload functionality
+
+    const handleThumbnailUpload = async (e) => {
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        if (file.size > 5 * 1024 * 1024) {
+            setErrors((prev) => ({
+                ...prev,
+                thumbnail: "Image size must be under 5MB.",
+            }));
+            return;
+        }
+
+        setIsUploading(true);
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const API_KEY = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
+
+            const res = await fetch(
+                `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            const data = await res.json();
+
+            if (data.success) {
+                setThumbnailUrl(data.data.url);
+
+                setErrors((prev) => ({
+                    ...prev,
+                    thumbnail: null,
+                }));
+            } else {
+                setErrors((prev) => ({
+                    ...prev,
+                    thumbnail: "Image upload failed.",
+                }));
+            }
+        } catch (err) {
+            setErrors((prev) => ({
+                ...prev,
+                thumbnail: "Network Error.",
+            }));
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    // form submit functionality
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +116,7 @@ export default function AddPromptPage() {
 
         const promptData = {
             ...data,
+            thumbnail: thumbnailUrl,
             creatorId: user?.id,
             creatorName: user?.name,
             creatorEmail: user?.email,
@@ -412,21 +474,59 @@ export default function AddPromptPage() {
 
                             {/* Thumbnail */}
 
-                            <TextField
-                                name="thumbnail"
-                                className="flex flex-col gap-2"
-                            >
+                            <div className="flex flex-col gap-2">
 
                                 <Label className="font-medium text-[#2F3B26]">
-                                    Thumbnail Image URL
+                                    Prompt Thumbnail
                                 </Label>
 
-                                <Input
-                                    placeholder="https://i.ibb.co/....."
-                                    className={inputClass}
-                                />
+                                <div className="flex items-center gap-5">
 
-                            </TextField>
+                                    <label className="group relative flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-[#DCCCAC] bg-[#FFF8EC] transition hover:border-[#546B41]">
+
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleThumbnailUpload}
+                                            className="hidden"
+                                        />
+
+                                        {thumbnailUrl ? (
+                                            <img
+                                                src={thumbnailUrl}
+                                                alt="Thumbnail Preview"
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <ArrowUpToLine
+                                                width={24}
+                                                height={24}
+                                                className="text-[#546B41]"
+                                            />
+                                        )}
+                                    </label>
+
+                                    <div>
+
+                                        <p className="font-medium text-[#2F3B26]">
+                                            {isUploading ? "Uploading..." : "Upload Thumbnail"}
+                                        </p>
+
+                                        <p className="text-sm text-gray-500">
+                                            PNG, JPG, JPEG (Max 5MB)
+                                        </p>
+
+                                        {errors.thumbnail && (
+                                            <p className="mt-1 text-sm text-red-500">
+                                                {errors.thumbnail}
+                                            </p>
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
