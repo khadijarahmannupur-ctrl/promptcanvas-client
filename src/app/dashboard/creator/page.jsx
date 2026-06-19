@@ -1,9 +1,10 @@
+import CreatorStats from '@/components/dashboard/CreatorStats';
 import React from 'react';
 
 const CreatorHomePage = () => {
     return (
         <div>
-            this is the creator Home page
+            <CreatorStats></CreatorStats>
         </div>
     );
 };
