@@ -28,7 +28,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "All Prompts", href: "/prompts" },
+    { label: "All Prompts", href: "/allPrompts" },
     ...(user? [{ label: "Dashboard", href: `/dashboard/${user?.role}` }] : []),
   ];
 
