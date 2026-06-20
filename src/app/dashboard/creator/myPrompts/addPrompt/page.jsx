@@ -56,7 +56,7 @@ export default function AddPromptPage() {
         formData.append("image", file);
 
         try {
-            const API_KEY = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
+            const API_KEY = process.env.NEXT_PUBLIC_IMAGE_API;
 
             const res = await fetch(
                 `https://api.imgbb.com/1/upload?key=${API_KEY}`,
@@ -123,7 +123,7 @@ export default function AddPromptPage() {
             creatorImage: user?.image,
             creatorRole: user.role,
             copyCount: 0,
-            status: "pending",
+            status: "approved",
         };
 
         // console.log(promptData);
