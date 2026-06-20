@@ -169,7 +169,7 @@ export default function PromptCard({ prompt }) {
                     </div>
 
                     <Link
-                        href={`/prompts/${prompt._id}`}
+                        href={`/allPrompts/${prompt._id}`}
                         className="rounded-xl bg-[#546B41] px-5 text-white hover:bg-[#445636]"
                     >
                         View
