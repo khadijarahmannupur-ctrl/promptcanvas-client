@@ -12,6 +12,7 @@ import {
     Calendar,
 } from "@gravity-ui/icons";
 import BookmarkButton from "./BookmarkButton";
+import PromptReviews from "./PromptReviews";
 
 export default async function PromptDetailsPage({ params }) {
 
@@ -140,6 +141,12 @@ export default async function PromptDetailsPage({ params }) {
                             </div>
 
                         </div>
+  
+                       {/* prompt review */}
+                        <PromptReviews
+                            prompt={prompt}
+                            // session={session}
+                        />
 
                     </div>
 
