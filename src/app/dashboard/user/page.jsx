@@ -1,9 +1,16 @@
+import Profile from '@/components/dashboard/Profile';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import React from 'react';
 
-const UserDashboardHomePage = () => {
+const UserDashboardHomePage = async() => {
+    const session = await auth.api.getSession({
+            headers: await headers() // you need to pass the headers object.
+        })
+    const user = session?.user;    
     return (
         <div>
-            this is the user page
+            <Profile user={user}></Profile>
         </div>
     );
 };

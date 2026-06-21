@@ -11,6 +11,7 @@ import {
     Person,
     Calendar,
 } from "@gravity-ui/icons";
+import BookmarkButton from "./BookmarkButton";
 
 export default async function PromptDetailsPage({ params }) {
 
@@ -19,6 +20,16 @@ export default async function PromptDetailsPage({ params }) {
     const prompt = await getPromptById(id);
 
     const createdDate = new Date(prompt.createdAt).toLocaleDateString();
+
+    const loggedUser = {
+
+        name: "Nupur",
+
+        email: "nupur@rahmani.com",
+
+        image: "https://...."
+
+    }
 
     return (
 
@@ -111,15 +122,22 @@ export default async function PromptDetailsPage({ params }) {
 
                             </pre>
 
-                            <Button
-                                className="mt-6 bg-[#546B41] text-white hover:bg-[#435635]"
-                            >
+                            <div className="mt-6 flex flex-wrap gap-4">
 
-                                <Copy />
+                                <Button
+                                    className="bg-[#546B41] text-white"
+                                >
+                                    <Copy />
 
-                                Copy Prompt
+                                    Copy Prompt
+                                </Button>
 
-                            </Button>
+                                <BookmarkButton
+                                    promptId={prompt._id}
+                                    user={loggedUser}
+                                />
+
+                            </div>
 
                         </div>
 
