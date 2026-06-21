@@ -14,6 +14,7 @@ import {
 import BookmarkButton from "./BookmarkButton";
 import PromptReviews from "./PromptReviews";
 import ReportPrompt from "./ReportPrompt";
+import CopyPromptButton from "./CopyPromptButton";
 
 export default async function PromptDetailsPage({ params }) {
 
@@ -126,13 +127,10 @@ export default async function PromptDetailsPage({ params }) {
 
                             <div className="mt-6 flex flex-wrap gap-4">
 
-                                <Button
-                                    className="bg-[#546B41] text-white"
-                                >
-                                    <Copy />
-
-                                    Copy Prompt
-                                </Button>
+                                <CopyPromptButton
+                                    promptId={prompt._id}
+                                    content={prompt.content}
+                                />
 
                                 <BookmarkButton
                                     promptId={prompt._id}
@@ -141,7 +139,7 @@ export default async function PromptDetailsPage({ params }) {
 
                                 <ReportPrompt
                                     prompt={prompt}
-                                    // session={session}
+                                // session={session}
                                 />
 
                             </div>
