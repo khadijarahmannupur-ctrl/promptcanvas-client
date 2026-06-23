@@ -4,13 +4,12 @@ import { Button } from "@heroui/react";
 import { Copy } from "@gravity-ui/icons";
 import toast from "react-hot-toast";
 import { increaseCopyCount } from "@/lib/actions/copy";
+import { useRouter } from "next/navigation";
 // import { increaseCopyCount } from "@/lib/api/prompts";
 
 
-export default function CopyPromptButton({
-    promptId,
-    content,
-}) {
+export default function CopyPromptButton({ promptId, content,}) {
+    const router = useRouter();
 
     const handleCopy = async () => {
 
@@ -21,6 +20,8 @@ export default function CopyPromptButton({
             await increaseCopyCount(promptId);
 
             toast.success("Prompt copied successfully.");
+
+            router.refresh();
 
         }
 

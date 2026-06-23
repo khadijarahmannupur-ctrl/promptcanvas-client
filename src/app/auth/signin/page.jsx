@@ -20,10 +20,15 @@ import {
 
 import { signIn } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    const redirectTo = searchParams.get('redirect') || '/';
 
     const [isVisible, setIsVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -42,11 +47,15 @@ export default function SignInPage() {
             const { error: authError } = await signIn.email({
                 email,
                 password,
-                callbackURL: "/",
             });
 
             if (authError) {
                 setError(authError.message || "Login failed.");
+            }
+            else{
+                setEmail("")
+                setPassword("")
+                router.push(redirectTo)
             }
         } catch (err) {
             setError("Something went wrong.");
@@ -181,7 +190,7 @@ export default function SignInPage() {
                     <p className="text-center text-sm text-gray-500">
                         Do not have an account?{" "}
                         <Link
-                            href="/auth/signup"
+                            href={`/auth/signup?redirect=${redirectTo}`}
                             className="font-medium text-[#546B41]"
                         >
                             Sign Up

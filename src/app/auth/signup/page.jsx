@@ -22,6 +22,7 @@ import { Description, Radio, RadioGroup } from "@heroui/react";
 
 import { signUp } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
@@ -29,6 +30,10 @@ export default function SignupPage() {
     const [photoURL, setPhotoURL] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("user");
+
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    const redirectTo = searchParams.get('redirect') || '/';
 
     const [isVisible, setIsVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +50,8 @@ export default function SignupPage() {
         setSuccess("");
         setIsLoading(true);
 
+        const plan = 'free';
+
         try {
             const { error: authError } = await signUp.email({
                 email,
@@ -52,7 +59,7 @@ export default function SignupPage() {
                 name,
                 image: photoURL, // 👈 added image url support
                 role,
-                callbackURL: "/",
+                plan,
             });
 
             if (authError) {
@@ -63,6 +70,7 @@ export default function SignupPage() {
                 setEmail("");
                 setPhotoURL("");
                 setPassword("");
+                router.push(redirectTo)
             }
         } catch (err) {
             setError("Network error occurred");
@@ -224,7 +232,7 @@ export default function SignupPage() {
                                 className="flex-1 rounded-xl border border-[#DCCCAC] bg-[#FFF8EC] px-4 py-3 transition-all duration-200 hover:border-[#546B41] hover:bg-[#F8F2E6]"
                             >
                                 <Radio.Control>
-                                    <Radio.Indicator  className="bg-[#546B41] rounded-full" />
+                                    <Radio.Indicator className="bg-[#546B41] rounded-full" />
                                 </Radio.Control>
 
                                 <Radio.Content>
@@ -262,7 +270,7 @@ export default function SignupPage() {
                     {/* Login */}
                     <p className="text-center text-sm text-gray-500">
                         Already have an account?{" "}
-                        <Link href="/auth/signin" className="text-[#546B41] font-medium">
+                        <Link href={`/auth/signin?redirect=${redirectTo}`} className="text-[#546B41] font-medium">
                             Sign in
                         </Link>
                     </p>

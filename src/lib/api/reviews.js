@@ -1,9 +1,17 @@
 
 import { serverFetch } from "../core/server";
 
-export const getReviews = async (promptId) => {
-    return serverFetch(`/api/reviews/${promptId}`);
+export const getReviewsForReviewSection = async (promptId) => {
+    return serverFetch(`/api/reviews/prompt/${promptId}`);
 };
+
+export const getReviewForDetailsPage = async(promptId, userId)=>{
+    return serverFetch(`/api/reviews/user-review?promptId=${promptId}&userId=${userId}`)
+}
+
+export const getAllReviewsByReviewer = async(userId)=>{
+    return serverFetch(`/api/reviews/user/${userId}`);
+}
 
 export const getAverageRating = async (promptId) => {
     return serverFetch(`/api/reviews/rating/${promptId}`);

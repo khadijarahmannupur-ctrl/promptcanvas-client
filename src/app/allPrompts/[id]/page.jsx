@@ -15,24 +15,33 @@ import BookmarkButton from "./BookmarkButton";
 import PromptReviews from "./PromptReviews";
 import ReportPrompt from "./ReportPrompt";
 import CopyPromptButton from "./CopyPromptButton";
+import { getUserSession } from "@/lib/core/session";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function PromptDetailsPage({ params }) {
 
     const { id } = await params;
-
     const prompt = await getPromptById(id);
-
     const createdDate = new Date(prompt.createdAt).toLocaleDateString();
 
-    const loggedUser = {
-
-        name: "Nupur",
-
-        email: "nupur@rahmani.com",
-
-        image: "https://...."
-
+    const user = await getUserSession();
+    if (!user) {
+        redirect(`/auth/signin?redirect=/allPrompts/${id}`)
     }
+    // console.log(user)
+    if (user.role !== 'user') {
+        return (
+            <div className="min-h-screen flex items-center justify-center rounded-xl border border-yellow-300 bg-yellow-50 p-4 text-yellow-700">
+                Only users can bookmark, copy, review, rate, and report prompts.
+            </div>
+        )
+    }
+
+    const isPremiumLocked =
+        prompt.visibility === "private" &&
+        user.plan !== "premium";
+
 
     return (
 
@@ -119,38 +128,79 @@ export default async function PromptDetailsPage({ params }) {
 
                             <div className="my-6 border-t border-[#DCCCAC]" />
 
-                            <pre className="whitespace-pre-wrap rounded-2xl bg-[#FFF8EC] p-6 text-sm leading-8 text-[#2F3B26]">
+                            <div className="relative">
 
-                                {prompt.content}
+                                <pre
+                                    className={`whitespace-pre-wrap rounded-2xl bg-[#FFF8EC] p-6 text-sm leading-8 text-[#2F3B26] transition ${isPremiumLocked
+                                        ? "select-none blur-md"
+                                        : ""
+                                        }`}
+                                >
+                                    {prompt.content}
+                                </pre>
 
-                            </pre>
+                                {isPremiumLocked && (
 
-                            <div className="mt-6 flex flex-wrap gap-4">
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-white/40 backdrop-blur-[2px]">
 
-                                <CopyPromptButton
-                                    promptId={prompt._id}
-                                    content={prompt.content}
-                                />
+                                        <h3 className="text-2xl font-bold text-[#2F3B26]">
+                                            Premium Prompt
+                                        </h3>
 
-                                <BookmarkButton
-                                    promptId={prompt._id}
-                                    user={loggedUser}
-                                />
+                                        <p className="mt-3 max-w-md text-center text-gray-600">
+                                            This prompt is available only for Premium members.
+                                            Upgrade your account to unlock this content.
+                                        </p>
 
-                                <ReportPrompt
-                                    prompt={prompt}
-                                // session={session}
-                                />
+                                        <Link
+                                            href="/payment"
+                                            className="mt-6 rounded-xl bg-[#546B41] px-6 py-3 font-semibold text-white transition hover:bg-[#445634]"
+                                        >
+                                            Upgrade to Premium
+                                        </Link>
+
+                                    </div>
+
+                                )}
 
                             </div>
+
+                            {
+                                !isPremiumLocked && (
+
+                                    <div className="mt-6 flex flex-wrap gap-4">
+
+                                        <CopyPromptButton
+                                            promptId={prompt._id}
+                                            content={prompt.content}
+                                        />
+
+                                        <BookmarkButton
+                                            promptId={prompt._id}
+                                            user={user}
+                                        />
+
+                                        <ReportPrompt
+                                            prompt={prompt}
+                                            user={user}
+                                        />
+
+                                    </div>
+
+                                )
+                            }
 
                         </div>
 
                         {/* prompt review */}
-                        <PromptReviews
-                            prompt={prompt}
-                        // session={session}
-                        />
+                        {
+                            !isPremiumLocked && (
+                                <PromptReviews
+                                    prompt={prompt}
+                                    user={user}
+                                />
+                            )
+                        }
 
                     </div>
 
@@ -170,10 +220,10 @@ export default async function PromptDetailsPage({ params }) {
 
                             <div className="flex items-center gap-4">
 
-                                <Avatar
-                                    src={prompt.creatorImage}
-                                    size="lg"
-                                />
+                                <Avatar>
+                                    <Avatar.Image src={prompt.creatorImage} />
+                                    <Avatar.Fallback>{prompt.creatorName[0]}</Avatar.Fallback>
+                                </Avatar>
 
                                 <div>
 

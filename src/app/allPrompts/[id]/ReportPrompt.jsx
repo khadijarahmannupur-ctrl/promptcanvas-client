@@ -17,7 +17,7 @@ import { createReport } from "@/lib/actions/reports";
 // import { addReport } from "@/lib/api/reports";
 
 
-export default function ReportPrompt({ prompt, session }) {
+export default function ReportPrompt({ prompt, user }) {
 
     const [reason, setReason] = useState("Spam");
     const [description, setDescription] = useState("");
@@ -25,7 +25,7 @@ export default function ReportPrompt({ prompt, session }) {
 
     const handleSubmit = async (close) => {
 
-        if (!session?.user) {
+        if (!user) {
 
             toast.error("Please login first.");
 
@@ -40,8 +40,8 @@ export default function ReportPrompt({ prompt, session }) {
             promptId: prompt._id,
             promptTitle: prompt.title,
 
-            reportedBy: session.user.name,
-            userEmail: session.user.email,
+            reportedBy: user.name,
+            userEmail: user.email,
 
             reason,
             description,

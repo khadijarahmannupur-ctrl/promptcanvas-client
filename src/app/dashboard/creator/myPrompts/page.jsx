@@ -1,4 +1,4 @@
-import { getRecruiterPrompts } from "@/lib/api/prompts";
+import { getCreatorPrompts} from "@/lib/api/prompts";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default async function CreatorAllPromptsPage() {
 
     const creatorId = user.id;
 
-    const prompts = (await getRecruiterPrompts(creatorId)) || [];
+    const prompts = (await getCreatorPrompts(creatorId)) || [];
 
     const totalPrompts = prompts.length;
 
