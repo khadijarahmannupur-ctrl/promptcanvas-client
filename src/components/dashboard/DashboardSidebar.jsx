@@ -23,9 +23,9 @@ export async function DashboardSidebar() {
 
         user: [
             { icon: Person, label: "Profile", href: "/dashboard/user" },
-            { icon: House, label: "Add Prompt", href: "/dashboard/user/addPrompt" },
+            { icon: House, label: "Add Prompt", href: "/dashboard/user/myPrompts/addPrompt" },
             { icon: House, label: "My Prompts", href: "/dashboard/user/myPrompts", },
-            { icon: House, label: "Saved Prompts", href: "/dashboard/user/savedPrompt", },
+            { icon: House, label: "Saved Prompts", href: "/dashboard/user/bookmarkedPrompts", },
             { icon: House, label: "My Reviews", href: "/dashboard/user/myReviews", },
         ],
 

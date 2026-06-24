@@ -24,14 +24,14 @@ import {
 } from "@gravity-ui/icons";
 import { createPrompt } from "@/lib/actions/prompts";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
-import { useSession } from "@/lib/auth-client";
-import { getCreatorPrompts} from "@/lib/api/prompts";
+import { useRouter } from "next/navigation";
 
-export default function AddPromptPage({user,}) {
+export default function AddPromptPage({ user, }) {
     const [errors, setErrors] = useState({});
     const [thumbnailUrl, setThumbnailUrl] = useState("");
     const [isUploading, setIsUploading] = useState(false);
+
+    const router = useRouter();
 
 
     // image upload functionality
@@ -89,7 +89,7 @@ export default function AddPromptPage({user,}) {
             setIsUploading(false);
         }
     };
-
+    
     // form submit functionality
 
     const handleSubmit = async (e) => {
@@ -131,7 +131,7 @@ export default function AddPromptPage({user,}) {
         if (res.insertedId) {
             toast.success('Prompt Post Successfully');
             e.target.reset();
-            redirect('/dashboard/creator/myPrompts')
+            router.push(`/dashboard/${user.role}/myPrompts`);
         }
     };
 
@@ -149,7 +149,7 @@ export default function AddPromptPage({user,}) {
 
     const listItemClasses =
         "rounded-lg px-3 py-2 cursor-pointer hover:bg-[#FFF8EC]";
-   
+
 
     return (
         <div className="min-h-screen bg-[#FFF8EC] py-10 px-4 md:px-8">
@@ -169,7 +169,7 @@ export default function AddPromptPage({user,}) {
                         />
 
                         <span className="text-sm font-medium text-[#546B41]">
-                            Creator Dashboard
+                            {user.role.charAt(0).toUpperCase() + user.role.slice(1)} Dashboard
                         </span>
 
                     </div>

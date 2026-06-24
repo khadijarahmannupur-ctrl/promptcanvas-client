@@ -8,20 +8,22 @@ import { getCreatorPrompts } from "@/lib/api/prompts";
 import { getPaymentById } from "@/lib/api/payment";
 
 import AddPromptContainer from "@/components/AddPrompts/AddPromptContainer";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-const CreatorAddPromptPage = async () => {
+const UserAddPromptPage = async () => {
 
     const user = await getUserSession();
 
     if (!user) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <p className="text-lg font-medium text-[#2F3B26]">
-                    Please login first.
-                </p>
-            </div>
+            redirect('/auth/signin')
+            // <div className="flex min-h-screen items-center justify-center">
+            //     <p className="text-lg font-medium text-[#2F3B26]">
+            //         Please login first.
+            //     </p>
+            // </div>
         );
     }
 
@@ -95,10 +97,10 @@ const CreatorAddPromptPage = async () => {
 
                             <div
                                 className={`h-full rounded-full transition-all duration-500 ${reachedLimit
-                                        ? "bg-red-500"
-                                        : percentage >= 70
-                                            ? "bg-yellow-500"
-                                            : "bg-[#546B41]"
+                                    ? "bg-red-500"
+                                    : percentage >= 70
+                                        ? "bg-yellow-500"
+                                        : "bg-[#546B41]"
                                     }`}
                                 style={{
                                     width: `${percentage}%`,
@@ -202,4 +204,4 @@ const CreatorAddPromptPage = async () => {
 
 };
 
-export default CreatorAddPromptPage;
+export default UserAddPromptPage;

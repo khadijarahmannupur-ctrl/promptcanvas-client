@@ -176,7 +176,7 @@ export default async function PromptDetailsPage({ params }) {
                                         />
 
                                         <BookmarkButton
-                                            promptId={prompt._id}
+                                            prompt={prompt}
                                             user={user}
                                         />
 

@@ -25,7 +25,7 @@ export default function UnauthorizedPage() {
 
                 <p className="mt-5 text-lg leading-8 text-gray-600">
 
-                    Sorry! You don't have permission to access this page.
+                    Sorry! You do not have permission to access this page.
 
                 </p>
 
