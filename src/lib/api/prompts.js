@@ -16,7 +16,15 @@ export const getPromptById = async(promptId)=> {
     return serverFetch(`/api/prompts/${promptId}`);
 } 
 
-export const getCreatorPrompts = async(creatorId, status = 'approved')=>{
-    const res = await fetch(`${serverUrl}/api/prompts?creatorId=${creatorId}&status=${status}`)
+export const getCreatorPrompts = async (creatorId, status) => {
+
+    let url = `${serverUrl}/api/prompts?creatorId=${creatorId}`;
+
+    if (status) {
+        url += `&status=${status}`;
+    }
+
+    const res = await fetch(url);
+
     return res.json();
-}
+};

@@ -1,9 +1,12 @@
+import Profile from '@/components/dashboard/Profile';
+import { getUserSession } from '@/lib/core/session';
 import React from 'react';
 
-const AdminDashboardHomePage = () => {
+const AdminDashboardHomePage = async() => {
+    const user = await getUserSession()
     return (
         <div>
-            this is admin home page
+            <Profile user={user}></Profile>
         </div>
     );
 };

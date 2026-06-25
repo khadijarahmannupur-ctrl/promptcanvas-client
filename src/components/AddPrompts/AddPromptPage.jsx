@@ -122,7 +122,7 @@ export default function AddPromptPage({ user, }) {
             creatorImage: user?.image,
             creatorRole: user.role,
             copyCount: 0,
-            status: "approved",
+            status: "pending",
         };
 
         // console.log(promptData);

@@ -52,7 +52,7 @@ export default function SignInPage() {
             if (authError) {
                 setError(authError.message || "Login failed.");
             }
-            else{
+            else {
                 setEmail("")
                 setPassword("")
                 router.push(redirectTo)
@@ -65,7 +65,16 @@ export default function SignInPage() {
     };
 
     const handleGoogleSignIn = async () => {
-        // signIn.social({ provider: "google" });
+        setError("");
+        setSuccess("Redirecting to Google...");
+
+        const signIn = async () => {
+            return await authClient.signIn.social({
+                provider: "google",
+            });
+        };
+
+        await signIn();
     };
 
     return (

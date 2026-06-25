@@ -34,6 +34,7 @@ export async function DashboardSidebar() {
             { icon: House, label: "All Users", href: "/dashboard/admin/allUsers" },
             { icon: House, label: "All Prompts", href: "/dashboard/admin/allPrompts", },
             { icon: House, label: "All Payments", href: "/dashboard/admin/allPayments", },
+            { icon: House, label: "Reported Prompts", href: "/dashboard/admin/reportedPrompts", },
             { icon: House, label: "All Analytics", href: "/dashboard/admin/analytics", },
         ],
     };

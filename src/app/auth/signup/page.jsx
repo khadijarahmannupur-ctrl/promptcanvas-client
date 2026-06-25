@@ -20,9 +20,10 @@ import {
 } from "@gravity-ui/icons";
 import { Description, Radio, RadioGroup } from "@heroui/react";
 
-import { signUp } from "@/lib/auth-client";
+import { authClient, signUp } from "@/lib/auth-client";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter, useSearchParams } from "next/navigation";
+// import { createAuthClient } from "better-auth/client";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
@@ -57,8 +58,8 @@ export default function SignupPage() {
                 email,
                 password,
                 name,
-                image: photoURL, // 👈 added image url support
-                role,
+                image: photoURL,
+                // role,
                 plan,
             });
 
@@ -82,9 +83,15 @@ export default function SignupPage() {
     const handleGoogleSignup = async () => {
         setError("");
         setSuccess("Redirecting to Google...");
-        // signIn.social({ provider: "google" }) -> your auth system
-    };
 
+        const signIn = async () => {
+            return await authClient.signIn.social({
+                provider: "google",
+            });
+        };
+
+        await signIn();
+    };
     return (
         <div className="relative flex min-h-screen items-center justify-center bg-[#FFF8EC] px-4 py-10">
 
