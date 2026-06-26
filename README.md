@@ -1,36 +1,304 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 PromptCanvas
 
-## Getting Started
+**PromptCanvas** is a modern AI Prompt Marketplace where users can discover, create, manage, and share high-quality AI prompts. The platform supports multiple user roles, premium subscriptions, secure authentication, reviews, bookmarks, payments, and a complete admin dashboard.
 
-First, run the development server:
+## 🌐 Live Demo
+
+🔗 Live Site: https://promptcanvas-client.vercel.app
+
+---
+
+## 📂 Repository
+
+### Client
+https://github.com/khadijarahmannupur-ctrl/promptcanvas-client
+
+### Server
+https://github.com/khadijarahmannupur-ctrl/promptcanvas-server
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
+- Email & Password Authentication
+- Google Authentication
+- Better Auth Integration
+- Protected Routes
+- Persistent Login
+- Role-based Access Control
+
+---
+
+## 👥 User Roles
+
+### 👤 User
+- Browse all approved prompts
+- Bookmark favorite prompts
+- Purchase premium prompts
+- Submit reviews
+- Manage own profile
+- View purchase history
+
+### ✨ Creator
+- Everything User can do
+- Create new prompts
+- Update own prompts
+- Delete own prompts
+- Track prompt performance
+
+### 👑 Admin
+- Manage all users
+- Manage all prompts
+- Approve/Reject pending prompts
+- Remove inappropriate content
+- View platform analytics
+- Manage reported prompts
+- View payment history
+
+---
+
+# 🤖 Prompt Features
+
+- Browse AI Prompts
+- Featured Prompts
+- Premium & Free Prompts
+- Prompt Details Page
+- Copy Prompt
+- Bookmark Prompt
+- Prompt Reviews
+- Report Prompt
+- Search Prompts
+- Filter by Category
+- Filter by AI Tool
+- Filter by Difficulty
+- Sort Prompts
+
+---
+
+# 💳 Payment
+
+- Stripe Payment Gateway
+- Premium Prompt Purchase
+- Purchase History
+- Secure Payment Flow
+
+---
+
+# ⭐ Reviews
+
+- Submit Review
+- Rating System
+- Customer Testimonials
+- Review Management
+
+---
+
+# 📊 Dashboard
+
+### User Dashboard
+- Profile
+- Saved Prompts
+- My Reviews
+- Purchase History
+
+### Creator Dashboard
+- Profile
+- Add Prompt
+- My Prompts
+- Prompt Management
+
+### Admin Dashboard
+- Manage Users
+- Manage Prompts
+- Reported Prompts
+- Payments
+- Analytics
+
+---
+
+# 🎨 UI Features
+
+- Responsive Design
+- Modern Dashboard
+- Beautiful Landing Page
+- Clean UI
+- Mobile Friendly
+- Loading States
+- Custom 404 Page
+- Unauthorized Page
+- Forbidden Page
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+- Next.js 15
+- React
+- Tailwind CSS
+- HeroUI
+- Better Auth Client
+- React Hook Form
+- Stripe
+- React Icons
+- Gravity UI Icons
+
+---
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth
+- Stripe API
+- CORS
+- dotenv
+
+---
+
+# 📦 NPM Packages
+
+## Client
+
+- next
+- react
+- tailwindcss
+- @heroui/react
+- better-auth
+- react-icons
+- @gravity-ui/icons
+- react-hook-form
+- stripe
+
+---
+
+## Server
+
+- express
+- mongodb
+- better-auth
+- cors
+- dotenv
+- stripe
+
+---
+
+# ⚙️ Environment Variables
+
+## Client
+
+```env
+NEXT_PUBLIC_SERVER_URL=
+NEXT_PUBLIC_IMAGE_API=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+```
+
+## Server
+
+```env
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+MONGO_DB_URI=
+AUTH_DB_NAME=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+STRIPE_SECRET_KEY=
+```
+
+---
+
+# 🚀 Installation
+
+## Clone Client
+
+```bash
+git clone https://github.com/khadijarahmannupur-ctrl/promptcanvas-client.git
+```
+
+```bash
+cd promptcanvas-client
+```
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Clone Server
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/khadijarahmannupur-ctrl/promptcanvas-server.git
+```
 
-## Learn More
+```bash
+cd promptcanvas-server
+```
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+# 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src
+│
+├── app
+├── components
+├── hooks
+├── lib
+├── providers
+├── utils
+└── middleware
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+# 🔒 Security
+
+- Protected Routes
+- Role-based Authorization
+- Better Auth Session Management
+- Secure API
+- Stripe Secure Payment
+- MongoDB Validation
+
+---
+
+# 📱 Responsive
+
+The application is fully responsive for:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+---
+
+# 👨‍💻 Developed By
+
+**Khadija Rahman Nupur**
+
+GitHub:
+https://github.com/khadijarahmannupur-ctrl
+
+---
+
+# ⭐ If you like this project
+
+Please consider giving the repository a ⭐ on GitHub.
