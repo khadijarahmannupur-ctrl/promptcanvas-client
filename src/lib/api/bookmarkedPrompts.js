@@ -1,5 +1,11 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch } from "../core/server";
 
 export const getBookmarkedPrompts = async (userEmail) => {
-    return serverFetch(`/api/bookmarks?userEmail=${userEmail}`);
+    return protectedFetch(`/api/bookmarks?userEmail=${userEmail}`);
+};
+
+export const checkBookmark = async (promptId, userEmail) => {
+    return serverFetch(
+        `/api/bookmarks/check?promptId=${promptId}&userEmail=${userEmail}`
+    );
 };

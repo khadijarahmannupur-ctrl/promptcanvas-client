@@ -1,9 +1,30 @@
+'use server'
+
+import { getUserToken } from "./session";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+export const authHeader = async () => {
+    const token = await getUserToken();
+    const header = token ? {
+        authorization: `Bearer ${token}`
+    } : {};
+    return header;
+}
+
 
 export const serverFetch = async (path) => {
     const res = await fetch(`${serverUrl}${path}`);
     return res.json();
+}
+
+export const protectedFetch = async (path) => {
+    const res = await fetch(`${serverUrl}${path}`,
+        {
+            headers: await authHeader()
+        }
+    );
+    return handleStatusCode(res);
 }
 
 
@@ -13,6 +34,7 @@ export const serverMutation = async (path, data, method = "POST") => {
         method,
         headers: {
             "Content-Type": "application/json",
+            ... await authHeader()
         },
     };
 
@@ -22,5 +44,18 @@ export const serverMutation = async (path, data, method = "POST") => {
 
     const res = await fetch(`${serverUrl}${path}`, options);
 
-    return res.json();
+    return handleStatusCode(res);
 };
+
+
+// handle 401, 404, 403
+const handleStatusCode = (res) => {
+    if (res.status === 401) {
+        redirect('/unauthorized')
+    }
+    else if (res.status === 403) {
+        redirect('/forbidden');
+    }
+
+    return res.json()
+}

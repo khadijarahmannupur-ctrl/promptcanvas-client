@@ -44,14 +44,11 @@ export default function PromptFilters({
 
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
 
-                {/* ================= Search ================= */}
+                {/* Search */}
 
                 <div className="lg:col-span-4">
 
-                    <TextField
-                        value={searchQuery}
-                        onChange={(value) => setSearchQuery(value)}
-                    >
+                    <TextField>
 
                         <span className="mb-2 block text-sm font-medium text-[#2F3B26]">
                             Search Prompt
@@ -60,14 +57,14 @@ export default function PromptFilters({
                         <InputGroup className="rounded-xl border border-[#DCCCAC] bg-[#FFF8EC]">
 
                             <InputGroup.Prefix className="pl-3 text-[#546B41]">
-
                                 <Magnifier />
-
                             </InputGroup.Prefix>
 
                             <InputGroup.Input
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Title, creator, tags..."
-                                className="bg-transparent px-3 py-2.5 text-[#2F3B26] placeholder:text-gray-400 outline-none"
+                                className="bg-transparent px-3 py-2.5 text-[#2F3B26]"
                             />
 
                         </InputGroup>
@@ -76,7 +73,7 @@ export default function PromptFilters({
 
                 </div>
 
-                {/* ================= Category ================= */}
+                {/* Category */}
 
                 <div className="lg:col-span-2">
 
@@ -86,23 +83,19 @@ export default function PromptFilters({
 
                     <Select
                         selectedKey={selectedCategory}
-                        onSelectionChange={(key) =>
-                            setSelectedCategory(key)
-                        }
+                        onSelectionChange={(key) => setSelectedCategory(key)}
                     >
 
                         <Select.Trigger className={triggerClass}>
 
                             <Select.Value>
                                 {selectedCategory === "all"
-                                    ? "All"
+                                    ? "All Categories"
                                     : selectedCategory}
                             </Select.Value>
 
                             <Select.Indicator>
-
                                 <ChevronDown />
-
                             </Select.Indicator>
 
                         </Select.Trigger>
@@ -111,29 +104,12 @@ export default function PromptFilters({
 
                             <ListBox>
 
-                                <ListBox.Item id="all" className={itemClass}>
-                                    All Categories
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Programming" className={itemClass}>
-                                    Programming
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Writing" className={itemClass}>
-                                    Writing
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Marketing" className={itemClass}>
-                                    Marketing
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Education" className={itemClass}>
-                                    Education
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Productivity" className={itemClass}>
-                                    Productivity
-                                </ListBox.Item>
+                                <ListBox.Item id="all">All Categories</ListBox.Item>
+                                <ListBox.Item id="Programming">Programming</ListBox.Item>
+                                <ListBox.Item id="Writing">Writing</ListBox.Item>
+                                <ListBox.Item id="Marketing">Marketing</ListBox.Item>
+                                <ListBox.Item id="Education">Education</ListBox.Item>
+                                <ListBox.Item id="Productivity">Productivity</ListBox.Item>
 
                             </ListBox>
 
@@ -143,7 +119,7 @@ export default function PromptFilters({
 
                 </div>
 
-                {/* ================= AI Tool ================= */}
+                {/* Tool */}
 
                 <div className="lg:col-span-2">
 
@@ -153,23 +129,19 @@ export default function PromptFilters({
 
                     <Select
                         selectedKey={selectedTool}
-                        onSelectionChange={(key) =>
-                            setSelectedTool(key)
-                        }
+                        onSelectionChange={(key) => setSelectedTool(key)}
                     >
 
                         <Select.Trigger className={triggerClass}>
 
                             <Select.Value>
                                 {selectedTool === "all"
-                                    ? "All"
+                                    ? "All Tools"
                                     : selectedTool}
                             </Select.Value>
 
                             <Select.Indicator>
-
                                 <ChevronDown />
-
                             </Select.Indicator>
 
                         </Select.Trigger>
@@ -178,29 +150,12 @@ export default function PromptFilters({
 
                             <ListBox>
 
-                                <ListBox.Item id="all" className={itemClass}>
-                                    All Tools
-                                </ListBox.Item>
-
-                                <ListBox.Item id="ChatGPT" className={itemClass}>
-                                    ChatGPT
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Gemini" className={itemClass}>
-                                    Gemini
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Claude" className={itemClass}>
-                                    Claude
-                                </ListBox.Item>
-
-                                <ListBox.Item id="DeepSeek" className={itemClass}>
-                                    DeepSeek
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Midjourney" className={itemClass}>
-                                    Midjourney
-                                </ListBox.Item>
+                                <ListBox.Item id="all">All Tools</ListBox.Item>
+                                <ListBox.Item id="ChatGPT">ChatGPT</ListBox.Item>
+                                <ListBox.Item id="Gemini">Gemini</ListBox.Item>
+                                <ListBox.Item id="Claude">Claude</ListBox.Item>
+                                <ListBox.Item id="DeepSeek">DeepSeek</ListBox.Item>
+                                <ListBox.Item id="Midjourney">Midjourney</ListBox.Item>
 
                             </ListBox>
 
@@ -210,7 +165,7 @@ export default function PromptFilters({
 
                 </div>
 
-                {/* ================= Difficulty ================= */}
+                {/* Difficulty */}
 
                 <div className="lg:col-span-2">
 
@@ -220,23 +175,19 @@ export default function PromptFilters({
 
                     <Select
                         selectedKey={selectedDifficulty}
-                        onSelectionChange={(key) =>
-                            setSelectedDifficulty(key)
-                        }
+                        onSelectionChange={(key) => setSelectedDifficulty(key)}
                     >
 
                         <Select.Trigger className={triggerClass}>
 
                             <Select.Value>
                                 {selectedDifficulty === "all"
-                                    ? "All"
+                                    ? "All Levels"
                                     : selectedDifficulty}
                             </Select.Value>
 
                             <Select.Indicator>
-
                                 <ChevronDown />
-
                             </Select.Indicator>
 
                         </Select.Trigger>
@@ -245,21 +196,10 @@ export default function PromptFilters({
 
                             <ListBox>
 
-                                <ListBox.Item id="all" className={itemClass}>
-                                    All Levels
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Beginner" className={itemClass}>
-                                    Beginner
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Intermediate" className={itemClass}>
-                                    Intermediate
-                                </ListBox.Item>
-
-                                <ListBox.Item id="Pro" className={itemClass}>
-                                    Pro
-                                </ListBox.Item>
+                                <ListBox.Item id="all">All Levels</ListBox.Item>
+                                <ListBox.Item id="Beginner">Beginner</ListBox.Item>
+                                <ListBox.Item id="Intermediate">Intermediate</ListBox.Item>
+                                <ListBox.Item id="Pro">Pro</ListBox.Item>
 
                             </ListBox>
 
@@ -269,7 +209,7 @@ export default function PromptFilters({
 
                 </div>
 
-                {/* ================= Sort ================= */}
+                {/* Sort */}
 
                 <div className="lg:col-span-2">
 
@@ -279,29 +219,23 @@ export default function PromptFilters({
 
                     <Select
                         selectedKey={sortBy}
-                        onSelectionChange={(key) =>
-                            setSortBy(key)
-                        }
+                        onSelectionChange={(key) => setSortBy(key)}
                     >
 
                         <Select.Trigger className={triggerClass}>
 
                             <Select.Value>
 
-                                {
-                                    sortBy === "newest"
-                                        ? "Newest"
-                                        : sortBy === "copies"
-                                            ? "Most Copied"
-                                            : "A-Z"
-                                }
+                                {sortBy === "newest"
+                                    ? "Newest"
+                                    : sortBy === "copies"
+                                        ? "Most Copied"
+                                        : "A-Z"}
 
                             </Select.Value>
 
                             <Select.Indicator>
-
                                 <ChevronDown />
-
                             </Select.Indicator>
 
                         </Select.Trigger>
@@ -310,17 +244,9 @@ export default function PromptFilters({
 
                             <ListBox>
 
-                                <ListBox.Item id="newest" className={itemClass}>
-                                    Newest
-                                </ListBox.Item>
-
-                                <ListBox.Item id="copies" className={itemClass}>
-                                    Most Copied
-                                </ListBox.Item>
-
-                                <ListBox.Item id="az" className={itemClass}>
-                                    A-Z
-                                </ListBox.Item>
+                                <ListBox.Item id="newest">Newest</ListBox.Item>
+                                <ListBox.Item id="copies">Most Copied</ListBox.Item>
+                                <ListBox.Item id="az">A-Z</ListBox.Item>
 
                             </ListBox>
 

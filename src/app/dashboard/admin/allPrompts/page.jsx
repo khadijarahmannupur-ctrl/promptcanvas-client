@@ -1,9 +1,9 @@
-import { getPrompts } from "@/lib/api/prompts";
+import { getAdminPrompts } from "@/lib/api/prompts";
 import AdminPromptTable from "./AdminPromptTable";
 
 export default async function AdminAllPromptPage() {
 
-    const prompts = await getPrompts();
+    const prompts = await getAdminPrompts();
 
     return (
 

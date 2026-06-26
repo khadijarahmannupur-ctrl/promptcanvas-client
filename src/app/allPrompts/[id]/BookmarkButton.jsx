@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { Button } from "@heroui/react";
 import { HeartFill } from "@gravity-ui/icons";
 import toast from "react-hot-toast";
+import { addBookmark, removeBookmark } from "@/lib/actions/bookmarks";
+import { checkBookmark } from "@/lib/api/bookmarkedPrompts";
+
 
 export default function BookmarkButton({ prompt, user }) {
     const [bookmarked, setBookmarked] = useState(false);
@@ -12,97 +15,87 @@ export default function BookmarkButton({ prompt, user }) {
     useEffect(() => {
         if (!user?.email || !prompt?._id) return;
 
-        async function checkBookmark() {
+        const loadBookmark = async () => {
             try {
-                const res = await fetch(
-                    `http://localhost:5000/api/bookmarks/check?promptId=${prompt._id}&userEmail=${user.email}`
+                const data = await checkBookmark(
+                    prompt._id,
+                    user.email
                 );
-
-                const data = await res.json();
 
                 setBookmarked(data.bookmarked);
-            } catch (error) {
-                console.error(error);
+            } catch (err) {
+                console.log(err);
             }
-        }
+        };
 
-        checkBookmark();
+        loadBookmark();
     }, [prompt?._id, user?.email]);
 
+
     const handleBookmark = async () => {
-        if (!user?.email) {
-            toast.error("Please login first.");
-            return;
+
+    if (!user) {
+        toast.error("Please login first.");
+        return;
+    }
+
+    if (user.role !== "user") {
+        toast.error("Only users can bookmark prompts.");
+        return;
+    }
+
+    setLoading(true);
+
+    try {
+
+        if (bookmarked) {
+
+            await removeBookmark(
+                prompt._id,
+                user.email
+            );
+
+            setBookmarked(false);
+
+            toast.success("Bookmark removed.");
+
+        } else {
+
+            await addBookmark({
+
+                promptId: prompt._id,
+
+                promptTitle: prompt.title,
+                promptThumbnail: prompt.thumbnail,
+                promptCategory: prompt.category,
+                promptTool: prompt.tool,
+                promptVisibility: prompt.visibility,
+
+                creatorName: prompt.creatorName,
+
+                userEmail: user.email,
+                userName: user.name,
+                userImage: user.image,
+
+            });
+
+            setBookmarked(true);
+
+            toast.success("Prompt bookmarked.");
+
         }
 
-        setLoading(true);
+    } catch (err) {
 
-        try {
-            if (bookmarked) {
-                const res = await fetch(
-                    "http://localhost:5000/api/bookmarks",
-                    {
-                        method: "DELETE",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            promptId: prompt._id,
-                            userEmail: user.email,
-                        }),
-                    }
-                );
+        toast.error(err.message || "Something went wrong.");
 
-                if (!res.ok) {
-                    throw new Error("Failed to remove bookmark");
-                }
+    } finally {
 
-                setBookmarked(false);
-                toast.success("Bookmark removed.");
-            } else {
-                const res = await fetch(
-                    "http://localhost:5000/api/bookmarks",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            promptId: prompt._id,
+        setLoading(false);
 
-                            promptTitle: prompt.title,
-                            promptThumbnail: prompt.thumbnail,
-                            promptCategory: prompt.category,
-                            promptTool: prompt.tool,
-                            promptVisibility: prompt.visibility,
+    }
+};
 
-                            creatorName: prompt.creatorName,
-
-                            userEmail: user.email,
-                            userName: user.name,
-                            userImage: user.image,
-
-                            createdAt: new Date(),
-                        }),
-                    }
-                );
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    toast.error(data.message || "Failed to bookmark.");
-                    return;
-                }
-
-                setBookmarked(true);
-                toast.success("Prompt bookmarked.");
-            }
-        } catch (error) {
-            toast.error(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <Button

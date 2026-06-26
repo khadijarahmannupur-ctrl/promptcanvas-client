@@ -51,7 +51,7 @@ export default function SignupPage() {
         setSuccess("");
         setIsLoading(true);
 
-        const plan = 'free';
+        // const plan = 'free';
 
         try {
             const { error: authError } = await signUp.email({
@@ -59,8 +59,10 @@ export default function SignupPage() {
                 password,
                 name,
                 image: photoURL,
-                // role,
-                plan,
+                data: {         
+                    role,
+                    plan: "free",
+                }
             });
 
             if (authError) {

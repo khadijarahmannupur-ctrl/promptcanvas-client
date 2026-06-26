@@ -30,13 +30,13 @@ export default async function PromptDetailsPage({ params }) {
         redirect(`/auth/signin?redirect=/allPrompts/${id}`)
     }
     // console.log(user)
-    if (user.role !== 'user') {
-        return (
-            <div className="min-h-screen flex items-center justify-center rounded-xl border border-yellow-300 bg-yellow-50 p-4 text-yellow-700">
-                Only users can bookmark, copy, review, rate, and report prompts.
-            </div>
-        )
-    }
+    // if (user.role !== 'user') {
+    //     return (
+    //         <div className="min-h-screen flex items-center justify-center rounded-xl border border-yellow-300 bg-yellow-50 p-4 text-yellow-700">
+    //             Only users can bookmark, copy, review, rate, and report prompts.
+    //         </div>
+    //     )
+    // }
 
     const isPremiumLocked =
         prompt.visibility === "private" &&
