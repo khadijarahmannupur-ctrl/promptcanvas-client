@@ -1,5 +1,6 @@
 'use server'
 
+import { redirect } from "next/navigation";
 import { getUserToken } from "./session";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -15,7 +16,7 @@ export const authHeader = async () => {
 
 export const serverFetch = async (path) => {
     const res = await fetch(`${serverUrl}${path}`);
-    return res.json();
+    return handleStatusCode(res);
 }
 
 export const protectedFetch = async (path) => {

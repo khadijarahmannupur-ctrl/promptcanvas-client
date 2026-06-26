@@ -11,8 +11,8 @@ import { getReviewsForReviewSection } from "@/lib/api/reviews";
 // import Image from "next/image";
 
 export default async function Home() {
-  const reviews = await getReviewsForReviewSection();
-  const creators = await getTopCreators();
+  const reviews = await getReviewsForReviewSection() || [];
+  const creators = await getTopCreators() || [];
   return (
     <>
       <Banner></Banner>

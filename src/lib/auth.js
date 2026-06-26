@@ -23,13 +23,14 @@ export const auth = betterAuth({
                 type: "string",
                 default: "free",
                 input: false,
-            }
+            },
         }
     },
     databaseHooks: {
         user: {
             create: {
                 before: async (user) => {
+                    // console.log("USER OBJECT:", user)
                     return {
                         data: {
                             ...user,
@@ -42,8 +43,8 @@ export const auth = betterAuth({
     },
     plugins: [
         admin({
-            defaultRole: "user",    
-            adminRoles: ["admin"],         
+            defaultRole: "user",
+            adminRoles: ["admin"],
         })
     ]
 });
